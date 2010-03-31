@@ -1,5 +1,12 @@
 Revision history for Perl extension Net::IRR.
 
+0.08 Mar 30 2010
+  - Changed dependency from Net::TCP to IO::Socket::INET.
+
+0.07 Nov 5 2009
+  - Added $whois->get_ipv6_routes_by_origin() - Greg Skinner [RT #48316]
+  - Fixed connect bug - Greg Skinner [RT #51154]
+
 0.06 Tue Aug 10 15:20:54 2004
   - $whois->sources() now uses wantarray to return a scalar or list
   - fixed a couple of typos in t/01_methods.t (reported by Joshua Keroes)

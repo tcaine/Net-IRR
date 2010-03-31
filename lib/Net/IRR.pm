@@ -328,12 +328,6 @@ Most Net::IRR methods set an error message when errors occur.  These errors can 
 
 Todd Caine  <todd.caine@gmail.com>
 
-=head1 CONTRIBUTORS
-
-Greg Skinner 
-  - Added $whois->get_ipv6_routes_by_origin() [RT #48316]
-  - Fixed connect bug [RT #51154]
-
 =head1 SEE ALSO
 
 Main IRRd Site
