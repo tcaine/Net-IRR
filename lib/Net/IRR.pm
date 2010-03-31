@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 use Carp;
-use Net::TCP;
+use IO::Socket::INET;
 
 use vars qw/ @ISA %EXPORT_TAGS @EXPORT_OK $VERSION /;
 
-$VERSION = '0.07';
+$VERSION = '0.08';
 
 #  used for route searches
 use constant EXACT_MATCH   => 'o';
@@ -30,11 +30,17 @@ sub connect {
     my $self = bless {}, ref($class) || $class;
     $self->{host} = $args{host} || '127.0.0.1';
     $self->{port} = $args{port} || 43;
-    eval {
-        local $SIG{__WARN__} = sub { $self->{errstr} = shift };
-        $self->{tcp} = Net::TCP->new($self->{host}, $self->{port})
-             or warn "cannot create Net::TCP object: $!";
-    };
+    $self->{tcp} = IO::Socket::INET->new(
+                       PeerAddr => $self->{host},
+                       PeerPort => $self->{port},
+                       Proto    => 'tcp'
+                   );
+
+    unless ($self->{tcp}) {
+        $self->{errstr} = "cannot create socket: $@";
+        return;
+    }
+
     return undef if $self->error();
     $self->_multi_mode();
     $self->_identify();
